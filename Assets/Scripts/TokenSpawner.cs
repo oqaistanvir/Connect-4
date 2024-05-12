@@ -37,10 +37,9 @@ public class TokenSpawner : MonoBehaviour
 
     private bool CalculateCoordinates(out float xPosition, out float yPosition)
     {
-        row = GridMatrix.Instance.GetLastEmptyRow(column);
+        row = GridMatrix.Instance.GetLowestEmptyRow(column);
         xPosition = startXPosition + xDistance * column;
         yPosition = startYPosition - yDistance * row;
-        Debug.Log(yPosition + "_" + row.ToString());
         if (row == -1) return false;
         else return true;
     }
