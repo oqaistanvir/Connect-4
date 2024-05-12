@@ -1,0 +1,72 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TokenSpawner : MonoBehaviour
+{
+    public static TokenSpawner Instance { get; private set; }
+
+    public event EventHandler<OnTokenSpawnedEventArgs> OnTokenSpawned;
+    public class OnTokenSpawnedEventArgs
+    {
+        public Transform tokenTransform;
+        public int row;
+        public int column;
+        public bool isFirstPlayer;
+    }
+
+    [SerializeField] private Transform tokenPrefab;
+    [SerializeField] private int column;
+
+    private float startXPosition = -4.5f;
+    private float startYPosition = 3.75f;
+    private float xDistance = 1.5f;
+    private float yDistance = 1.5f;
+    private int row;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        GameInput.Instance.OnTKeyPressed += GameInput_OnTKeyPressed;
+        GameInput.Instance.OnYKeyPressed += GameInput_OnYKeyPressed;
+    }
+
+    private bool CalculateCoordinates(out float xPosition, out float yPosition)
+    {
+        row = GridMatrix.Instance.GetLastEmptyRow(column);
+        xPosition = startXPosition + xDistance * column;
+        yPosition = startYPosition - yDistance * row;
+        Debug.Log(yPosition + "_" + row.ToString());
+        if (row == -1) return false;
+        else return true;
+    }
+
+    private void SpawnToken(bool isFirstPlayer)
+    {
+        float xPosition, yPosition;
+        if (CalculateCoordinates(out xPosition, out yPosition))
+        {
+            Transform tokenTransform = Token.CreateTokenObject(tokenPrefab, new Vector3(xPosition, yPosition), isFirstPlayer);
+            OnTokenSpawned?.Invoke(this, new OnTokenSpawnedEventArgs
+            {
+                tokenTransform = tokenTransform,
+                row = row,
+                column = column,
+                isFirstPlayer = isFirstPlayer
+            });
+        }
+    }
+    private void GameInput_OnTKeyPressed(object sender, EventArgs e)
+    {
+        SpawnToken(true);
+    }
+
+    private void GameInput_OnYKeyPressed(object sender, EventArgs e)
+    {
+        SpawnToken(false);
+    }
+}
