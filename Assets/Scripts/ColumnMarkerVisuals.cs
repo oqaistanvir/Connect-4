@@ -19,8 +19,11 @@ public class ColumnMarkerVisuals : MonoBehaviour
 
     private void TokenSpawner_OnColumnChanged(object sender, TokenSpawner.OnColumnChangedEventArgs e)
     {
-        columnMarkerArray[selectedColumnMarker].gameObject.SetActive(false);
-        selectedColumnMarker = e.column;
-        columnMarkerArray[selectedColumnMarker].gameObject.SetActive(true);
+        if (GameManager.Instance.IsGamePlaying())
+        {
+            columnMarkerArray[selectedColumnMarker].gameObject.SetActive(false);
+            selectedColumnMarker = e.column;
+            columnMarkerArray[selectedColumnMarker].gameObject.SetActive(true);
+        }
     }
 }

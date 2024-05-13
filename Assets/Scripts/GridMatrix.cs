@@ -39,11 +39,13 @@ public class GridMatrix : MonoBehaviour
         tokenMatrix[e.row, e.column] = tokenKey;
         if (CheckWinCondition(e.row, e.column, e.isFirstPlayer))
         {
-            Debug.Log(e.isFirstPlayer ? "Player 1" + " is the winner" : "Player 2" + " is the winner");
+            GameOverUI.Instance.SetResultText(tokenKey);
+            GameManager.Instance.SetGameOver();
         }
         else if (emptyCells == 0)
         {
-            Debug.Log("The game ended in a draw");
+            GameOverUI.Instance.SetResultText(0);
+            GameManager.Instance.SetGameOver();
         }
     }
 

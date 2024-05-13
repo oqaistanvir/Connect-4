@@ -87,6 +87,9 @@ public class TokenSpawner : MonoBehaviour
     }
     private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
     {
-        SpawnToken(TurnManager.Instance.GetCurrentPlayer());
+        if (GameManager.Instance.IsGamePlaying())
+        {
+            SpawnToken(TurnManager.Instance.GetCurrentPlayer());
+        }
     }
 }

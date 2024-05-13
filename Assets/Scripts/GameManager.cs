@@ -20,19 +20,29 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        state = State.WaitingToStart;
+        state = State.GamePlaying;
     }
 
     private void Start()
     {
-        GameInput.Instance.OnPlaceTokenKeyPressed += GameInput_OnPlaceTokenKeyPressed;
+        // GameInput.Instance.OnPlaceTokenKeyPressed += GameInput_OnPlaceTokenKeyPressed;
     }
 
-    private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
+    // private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
+    // {
+    //     if (state == State.WaitingToStart)
+    //     {
+    //         state = State.GamePlaying;
+    //     }
+    // }
+
+    public bool IsGamePlaying()
     {
-        if (state == State.WaitingToStart)
-        {
-            state = State.GamePlaying;
-        }
+        return state == State.GamePlaying;
+    }
+
+    public void SetGameOver()
+    {
+        state = State.GameOver;
     }
 }
