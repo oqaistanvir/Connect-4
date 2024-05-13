@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     {
         WaitingToStart,
         GamePlaying,
+        PlayerChanging,
         GamePaused,
         GameOver,
     }
