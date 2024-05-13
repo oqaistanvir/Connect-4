@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GridMatrix : MonoBehaviour
 {
@@ -14,9 +15,9 @@ public class GridMatrix : MonoBehaviour
     {
         Instance = this;
 
-        for (int i = 0; i < tokenMatrix.GetLength(0); i++)
+        for (int i = 0; i < boardRows; i++)
         {
-            for (int j = 0; j < tokenMatrix.GetLength(1); j++)
+            for (int j = 0; j < boardColumns; j++)
             {
                 tokenMatrix[i, j] = 0;
             }
@@ -42,7 +43,7 @@ public class GridMatrix : MonoBehaviour
 
     public int GetLowestEmptyRow(int column)
     {
-        for (int i = tokenMatrix.GetLength(0) - 1; i >= 0; i--)
+        for (int i = boardRows - 1; i >= 0; i--)
         {
             if (tokenMatrix[i, column] == 0) return i;
         }
@@ -92,7 +93,12 @@ public class GridMatrix : MonoBehaviour
 
     private bool CheckOutOfBounds(int row, int column)
     {
-        if (row < 0 || row >= tokenMatrix.GetLength(0) || column < 0 || column >= tokenMatrix.GetLength(1)) return true;
+        if (row < 0 || row >= boardRows || column < 0 || column >= boardColumns) return true;
         else return false;
+    }
+
+    public int GetNumColumns()
+    {
+        return boardColumns;
     }
 }

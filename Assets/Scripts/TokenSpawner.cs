@@ -16,6 +16,12 @@ public class TokenSpawner : MonoBehaviour
         public bool isFirstPlayer;
     }
 
+    public event EventHandler<OnColumnChangedEventArgs> OnColumnChanged;
+    public class OnColumnChangedEventArgs
+    {
+        public int column;
+    }
+
     [SerializeField] private Transform tokenPrefab;
     [SerializeField] private int column;
 
@@ -33,6 +39,26 @@ public class TokenSpawner : MonoBehaviour
     {
         GameInput.Instance.OnTKeyPressed += GameInput_OnTKeyPressed;
         GameInput.Instance.OnYKeyPressed += GameInput_OnYKeyPressed;
+        GameInput.Instance.OnNextKeyPressed += GameInput_OnNextKeyPressed;
+        GameInput.Instance.OnPreviousKeyPressed += GameInput_OnPreviousKeyPressed;
+    }
+
+    private void GameInput_OnPreviousKeyPressed(object sender, EventArgs e)
+    {
+        column = column > 0 ? (column - 1) % GridMatrix.Instance.GetNumColumns() : GridMatrix.Instance.GetNumColumns() - 1;
+        OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+        {
+            column = column
+        });
+    }
+
+    private void GameInput_OnNextKeyPressed(object sender, EventArgs e)
+    {
+        column = (column + 1) % GridMatrix.Instance.GetNumColumns();
+        OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+        {
+            column = column
+        });
     }
 
     private bool CalculateCoordinates(out float xPosition, out float yPosition)
