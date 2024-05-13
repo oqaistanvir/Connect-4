@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
-    public event EventHandler OnTKeyPressed;
-    public event EventHandler OnYKeyPressed;
+    public event EventHandler OnPlaceTokenKeyPressed;
     public event EventHandler OnNextKeyPressed;
     public event EventHandler OnPreviousKeyPressed;
     public static GameInput Instance { get; private set; }
@@ -21,12 +20,8 @@ public class GameInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            OnTKeyPressed?.Invoke(this, EventArgs.Empty);
+            OnPlaceTokenKeyPressed?.Invoke(this, EventArgs.Empty);
 
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            OnYKeyPressed?.Invoke(this, EventArgs.Empty);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {

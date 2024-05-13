@@ -37,8 +37,7 @@ public class TokenSpawner : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnTKeyPressed += GameInput_OnTKeyPressed;
-        GameInput.Instance.OnYKeyPressed += GameInput_OnYKeyPressed;
+        GameInput.Instance.OnPlaceTokenKeyPressed += GameInput_OnPlaceTokenKeyPressed;
         GameInput.Instance.OnNextKeyPressed += GameInput_OnNextKeyPressed;
         GameInput.Instance.OnPreviousKeyPressed += GameInput_OnPreviousKeyPressed;
     }
@@ -83,15 +82,11 @@ public class TokenSpawner : MonoBehaviour
                 column = column,
                 isFirstPlayer = isFirstPlayer
             });
+            TurnManager.Instance.ToggleCurrentPlayer();
         }
     }
-    private void GameInput_OnTKeyPressed(object sender, EventArgs e)
+    private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
     {
-        SpawnToken(true);
-    }
-
-    private void GameInput_OnYKeyPressed(object sender, EventArgs e)
-    {
-        SpawnToken(false);
+        SpawnToken(TurnManager.Instance.GetCurrentPlayer());
     }
 }

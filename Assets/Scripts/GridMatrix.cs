@@ -9,6 +9,7 @@ public class GridMatrix : MonoBehaviour
     public static GridMatrix Instance { get; private set; }
     private static int boardRows = 6;
     private static int boardColumns = 7;
+    private int emptyCells = boardRows * boardColumns;
     private int[,] tokenMatrix = new int[boardRows, boardColumns];
 
     private void Awake()
@@ -34,10 +35,15 @@ public class GridMatrix : MonoBehaviour
         int tokenKey;
         if (e.isFirstPlayer) tokenKey = 1;
         else tokenKey = 2;
+        emptyCells--;
         tokenMatrix[e.row, e.column] = tokenKey;
         if (CheckWinCondition(e.row, e.column, e.isFirstPlayer))
         {
             Debug.Log(e.isFirstPlayer ? "Player 1" + " is the winner" : "Player 2" + " is the winner");
+        }
+        else if (emptyCells == 0)
+        {
+            Debug.Log("The game ended in a draw");
         }
     }
 
