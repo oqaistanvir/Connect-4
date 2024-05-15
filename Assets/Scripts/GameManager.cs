@@ -8,10 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private enum State
     {
-        WaitingToStart,
         GamePlaying,
-        PlayerChanging,
-        GamePaused,
         GameOver,
     }
 
@@ -22,19 +19,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         state = State.GamePlaying;
     }
-
-    private void Start()
-    {
-        // GameInput.Instance.OnPlaceTokenKeyPressed += GameInput_OnPlaceTokenKeyPressed;
-    }
-
-    // private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
-    // {
-    //     if (state == State.WaitingToStart)
-    //     {
-    //         state = State.GamePlaying;
-    //     }
-    // }
 
     public bool IsGamePlaying()
     {

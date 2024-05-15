@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5774419623485915025}
   - component: {fileID: 1436196803914811148}
   - component: {fileID: 7994982124136055521}
-  - component: {fileID: 6480029500257901529}
-  - component: {fileID: 6476851472884365305}
   m_Layer: 0
   m_Name: Token
   m_TagString: Untagged
@@ -65,39 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f6b62147a71d94fa162726ef811012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6480029500257901529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3051825863527749346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eead58a7e35c7c5438491276865dbfae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &6476851472884365305
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3051825863527749346}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0691ef672e60b0d499dea2690ff7f28f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7067680731304519873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,18 +121,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 997426355467938349, guid: 4f20c54033cdc6942adb058833efb0fa,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1732716811739491003, guid: 4f20c54033cdc6942adb058833efb0fa,
         type: 3}
       propertyPath: m_Name
       value: Token_Visual
       objectReference: {fileID: 0}
+    - target: {fileID: 1810138955871216150, guid: 4f20c54033cdc6942adb058833efb0fa,
+        type: 3}
+      propertyPath: VelocityModule.z.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5382364250328938329, guid: 4f20c54033cdc6942adb058833efb0fa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157463566889381776, guid: 4f20c54033cdc6942adb058833efb0fa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9157463566889381776, guid: 4f20c54033cdc6942adb058833efb0fa, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f20c54033cdc6942adb058833efb0fa, type: 3}

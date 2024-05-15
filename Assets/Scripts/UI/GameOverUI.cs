@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour
 {
     public static GameOverUI Instance { get; private set; }
 
+    private const string GAME_SCENE = "GameScene";
     [SerializeField] private TextMeshProUGUI resultText;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button quitButton;
     private void Awake()
     {
         Instance = this;
@@ -15,6 +20,14 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
+        restartButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(GAME_SCENE);
+        });
+        quitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
         Hide();
     }
 
