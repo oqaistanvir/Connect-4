@@ -7,7 +7,7 @@ public class TurnManager : MonoBehaviour
 {
     public event EventHandler OnPlayerChanged;
     public static TurnManager Instance { get; private set; }
-    private bool isFirstPlayer = true;
+    private int currentPlayer = 1;
 
     private void Awake()
     {
@@ -15,18 +15,18 @@ public class TurnManager : MonoBehaviour
     }
     private void Start()
     {
-        TurnIndicatorUI.Instance.UpdateTurnIndicator(isFirstPlayer);
+        TurnIndicatorUI.Instance.UpdateTurnIndicator(currentPlayer);
     }
     public void ToggleCurrentPlayer()
     {
-        isFirstPlayer = !isFirstPlayer;
+        currentPlayer = currentPlayer == 2 ? 1 : 2;
         OnPlayerChanged?.Invoke(this, EventArgs.Empty);
-        TurnIndicatorUI.Instance.UpdateTurnIndicator(isFirstPlayer);
+        TurnIndicatorUI.Instance.UpdateTurnIndicator(currentPlayer);
     }
 
-    public bool GetCurrentPlayer()
+    public int GetCurrentPlayer()
     {
-        return isFirstPlayer;
+        return currentPlayer;
     }
 
 

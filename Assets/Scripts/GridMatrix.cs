@@ -11,6 +11,7 @@ public class GridMatrix : MonoBehaviour
     private static int boardColumns = 7;
     private int emptyCells = boardRows * boardColumns;
     private int[,] tokenMatrix = new int[boardRows, boardColumns];
+    private Token[,] tokenObjectMatrix = new Token[boardRows, boardColumns];
 
     private void Awake()
     {
@@ -23,6 +24,14 @@ public class GridMatrix : MonoBehaviour
                 tokenMatrix[i, j] = 0;
             }
         }
+
+        for (int i = 0; i < boardRows; i++)
+        {
+            for (int j = 0; j < boardColumns; j++)
+            {
+                tokenObjectMatrix[i, j] = null;
+            }
+        }
     }
 
     private void Start()
@@ -32,14 +41,12 @@ public class GridMatrix : MonoBehaviour
 
     private void TokenSpawner_OnTokenSpawned(object sender, TokenSpawner.OnTokenSpawnedEventArgs e)
     {
-        int tokenKey;
-        if (e.isFirstPlayer) tokenKey = 1;
-        else tokenKey = 2;
         emptyCells--;
-        tokenMatrix[e.row, e.column] = tokenKey;
-        if (CheckWinCondition(e.row, e.column, e.isFirstPlayer))
+        tokenMatrix[e.row, e.column] = e.tokenKey;
+        tokenObjectMatrix[e.row, e.column] = e.token;
+        if (CheckWinCondition(e.row, e.column, e.tokenKey))
         {
-            GameOverUI.Instance.SetResultText(tokenKey);
+            GameOverUI.Instance.SetResultText(e.tokenKey);
             GameManager.Instance.SetGameOver();
         }
         else if (emptyCells == 0)
@@ -58,11 +65,8 @@ public class GridMatrix : MonoBehaviour
         return -1;
     }
 
-    private bool CheckWinCondition(int row, int column, bool isFirstPlayer)
+    private bool CheckWinCondition(int row, int column, int tokenKey)
     {
-        int tokenKey;
-        if (isFirstPlayer) tokenKey = 1;
-        else tokenKey = 2;
         //Check Horizontal
         if (CountTokens(row, column, 0, -1, tokenKey) + 1 + CountTokens(row, column, 0, 1, tokenKey) >= 4)
         {

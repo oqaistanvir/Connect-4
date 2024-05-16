@@ -16,10 +16,10 @@ public class TurnIndicatorUI : MonoBehaviour
         Instance = this;
         animator = GetComponent<Animator>();
     }
-    public void UpdateTurnIndicator(bool isFirstPlayer)
+    public void UpdateTurnIndicator(int currentPlayer)
     {
-        turnIndicatorFlash.text = "PLAYER " + (isFirstPlayer ? "1" : "2") + " TURN";
-        turnIndicator.text = "PLAYER " + (isFirstPlayer ? "1" : "2");
+        turnIndicatorFlash.text = "PLAYER " + (currentPlayer) + " TURN";
+        turnIndicator.text = "PLAYER " + (currentPlayer);
         animator.SetTrigger(FADE_IN_FADE_OUT);
     }
 }

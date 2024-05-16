@@ -10,10 +10,10 @@ public class TokenSpawner : MonoBehaviour
     public event EventHandler<OnTokenSpawnedEventArgs> OnTokenSpawned;
     public class OnTokenSpawnedEventArgs
     {
-        public Transform tokenTransform;
+        public Token token;
         public int row;
         public int column;
-        public bool isFirstPlayer;
+        public int tokenKey;
     }
 
     public event EventHandler<OnColumnChangedEventArgs> OnColumnChanged;
@@ -69,18 +69,19 @@ public class TokenSpawner : MonoBehaviour
         else return true;
     }
 
-    private void SpawnToken(bool isFirstPlayer)
+    private void SpawnToken(int tokenKey)
     {
         float xPosition, yPosition;
         if (CalculateCoordinates(out xPosition, out yPosition))
         {
-            Transform tokenTransform = Token.CreateTokenObject(tokenPrefab, new Vector3(xPosition, yPosition), isFirstPlayer);
+            Token token = Token.CreateTokenObject(tokenPrefab, new Vector3(xPosition, yPosition));
+            token.SetTokenCharacteristics(tokenKey);
             OnTokenSpawned?.Invoke(this, new OnTokenSpawnedEventArgs
             {
-                tokenTransform = tokenTransform,
+                token = token,
                 row = row,
                 column = column,
-                isFirstPlayer = isFirstPlayer
+                tokenKey = tokenKey
             });
             TurnManager.Instance.ToggleCurrentPlayer();
         }

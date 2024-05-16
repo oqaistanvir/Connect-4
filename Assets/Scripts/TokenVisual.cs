@@ -12,15 +12,6 @@ public class TokenVisual : MonoBehaviour
     }
     private void Start()
     {
-        TokenSpawner.Instance.OnTokenSpawned += TokenSpawner_OnTokenSpawned;
-    }
-
-    private void TokenSpawner_OnTokenSpawned(object sender, TokenSpawner.OnTokenSpawnedEventArgs e)
-    {
-        if (e.tokenTransform == transform)
-        {
-            animator.SetTrigger(TOKEN_SPAWN);
-            TokenSpawner.Instance.OnTokenSpawned -= TokenSpawner_OnTokenSpawned;
-        }
+        animator.SetTrigger(TOKEN_SPAWN);
     }
 }
