@@ -1,19 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+public class PauseUI : MonoBehaviour
 {
-    public static GameOverUI Instance { get; private set; }
-
+    public static PauseUI Instance { get; private set; }
     private const string GAME_SCENE = "GameScene";
-    [SerializeField] private TextMeshProUGUI resultText;
-    [SerializeField] private Button showBoardButton;
+    [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button quitButton;
+
     private void Awake()
     {
         Instance = this;
@@ -21,9 +20,9 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
-        showBoardButton.onClick.AddListener(() =>
+        GameInput.Instance.OnPauseKeyPressed += GameInput_OnPauseKeyPressed;
+        resumeButton.onClick.AddListener(() =>
         {
-            GameUI.Instance.HideGameHud();
             Hide();
         });
 
@@ -39,6 +38,11 @@ public class GameOverUI : MonoBehaviour
         Hide();
     }
 
+    private void GameInput_OnPauseKeyPressed(object sender, EventArgs e)
+    {
+        Show();
+    }
+
     public void Show()
     {
         gameObject.SetActive(true);
@@ -47,13 +51,5 @@ public class GameOverUI : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
-    }
-
-    public void SetResultText(int resultKey)
-    {
-        if (resultKey == 0) resultText.text = "DRAW";
-        else if (resultKey == 1) resultText.text = "PLAYER 1 WON";
-        else resultText.text = "PLAYER 2 WON";
-        Show();
     }
 }

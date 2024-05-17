@@ -53,6 +53,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e12d3d1f-72c5-4fd7-a26a-6fcf7bed28ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +97,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""PrevColumn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07417e48-b1b7-4cf6-b465-82ed0897b2ad"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +119,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_TokenPlacement = m_Player.FindAction("TokenPlacement", throwIfNotFound: true);
         m_Player_NextColumn = m_Player.FindAction("NextColumn", throwIfNotFound: true);
         m_Player_PrevColumn = m_Player.FindAction("PrevColumn", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +184,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TokenPlacement;
     private readonly InputAction m_Player_NextColumn;
     private readonly InputAction m_Player_PrevColumn;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -170,6 +192,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @TokenPlacement => m_Wrapper.m_Player_TokenPlacement;
         public InputAction @NextColumn => m_Wrapper.m_Player_NextColumn;
         public InputAction @PrevColumn => m_Wrapper.m_Player_PrevColumn;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +211,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PrevColumn.started += instance.OnPrevColumn;
             @PrevColumn.performed += instance.OnPrevColumn;
             @PrevColumn.canceled += instance.OnPrevColumn;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -201,6 +227,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PrevColumn.started -= instance.OnPrevColumn;
             @PrevColumn.performed -= instance.OnPrevColumn;
             @PrevColumn.canceled -= instance.OnPrevColumn;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -223,5 +252,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnTokenPlacement(InputAction.CallbackContext context);
         void OnNextColumn(InputAction.CallbackContext context);
         void OnPrevColumn(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

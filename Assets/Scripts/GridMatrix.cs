@@ -10,20 +10,11 @@ public class GridMatrix : MonoBehaviour
     private static int boardRows = 6;
     private static int boardColumns = 7;
     private int emptyCells = boardRows * boardColumns;
-    private int[,] tokenMatrix = new int[boardRows, boardColumns];
     private Token[,] tokenObjectMatrix = new Token[boardRows, boardColumns];
 
     private void Awake()
     {
         Instance = this;
-
-        for (int i = 0; i < boardRows; i++)
-        {
-            for (int j = 0; j < boardColumns; j++)
-            {
-                tokenMatrix[i, j] = 0;
-            }
-        }
 
         for (int i = 0; i < boardRows; i++)
         {
@@ -42,25 +33,24 @@ public class GridMatrix : MonoBehaviour
     private void TokenSpawner_OnTokenSpawned(object sender, TokenSpawner.OnTokenSpawnedEventArgs e)
     {
         emptyCells--;
-        tokenMatrix[e.row, e.column] = e.tokenKey;
-        tokenObjectMatrix[e.row, e.column] = e.token;
-        if (CheckWinCondition(e.row, e.column, e.tokenKey))
+        tokenObjectMatrix[e.token.GetTokenRow(), e.token.GetTokenColumn()] = e.token;
+        if (CheckWinCondition(e.token.GetTokenRow(), e.token.GetTokenColumn(), e.token.GetTokenKey()))
         {
-            GameOverUI.Instance.SetResultText(e.tokenKey);
             GameManager.Instance.SetGameOver();
+            GameOverUI.Instance.SetResultText(e.token.GetTokenKey());
         }
         else if (emptyCells == 0)
         {
-            GameOverUI.Instance.SetResultText(0);
             GameManager.Instance.SetGameOver();
+            GameOverUI.Instance.SetResultText(0);
         }
     }
 
     public int GetLowestEmptyRow(int column)
     {
-        for (int i = boardRows - 1; i >= 0; i--)
+        for (int i = 0; i < boardRows; i++)
         {
-            if (tokenMatrix[i, column] == 0) return i;
+            if (tokenObjectMatrix[i, column] == null) return i;
         }
         return -1;
     }
@@ -70,21 +60,33 @@ public class GridMatrix : MonoBehaviour
         //Check Horizontal
         if (CountTokens(row, column, 0, -1, tokenKey) + 1 + CountTokens(row, column, 0, 1, tokenKey) >= 4)
         {
+            tokenObjectMatrix[row, column].ShowVictoryParticles();
+            ActivateParticles(row, column, 0, -1, tokenKey);
+            ActivateParticles(row, column, 0, 1, tokenKey);
             return true;
         }
         //Check Vertical
         if (CountTokens(row, column, -1, 0, tokenKey) + 1 + CountTokens(row, column, 1, 0, tokenKey) >= 4)
         {
+            tokenObjectMatrix[row, column].ShowVictoryParticles();
+            ActivateParticles(row, column, -1, 0, tokenKey);
+            ActivateParticles(row, column, 1, 0, tokenKey);
             return true;
         }
         //Check Diagonal Top Left to Bottom Right
         if (CountTokens(row, column, -1, 1, tokenKey) + 1 + CountTokens(row, column, 1, -1, tokenKey) >= 4)
         {
+            tokenObjectMatrix[row, column].ShowVictoryParticles();
+            ActivateParticles(row, column, -1, 1, tokenKey);
+            ActivateParticles(row, column, 1, -1, tokenKey);
             return true;
         }
         //Check Diagonal Bottom Left to Top Right
         if (CountTokens(row, column, -1, -1, tokenKey) + 1 + CountTokens(row, column, 1, 1, tokenKey) >= 4)
         {
+            tokenObjectMatrix[row, column].ShowVictoryParticles();
+            ActivateParticles(row, column, -1, -1, tokenKey);
+            ActivateParticles(row, column, 1, 1, tokenKey);
             return true;
         }
         return false;
@@ -97,7 +99,7 @@ public class GridMatrix : MonoBehaviour
         {
             row = row + dirRow;
             column = column + dirCol;
-            if (CheckOutOfBounds(row, column) || tokenMatrix[row, column] != tokenKey) return count;
+            if (CheckOutOfBounds(row, column) || tokenObjectMatrix[row, column] == null || tokenObjectMatrix[row, column].GetTokenKey() != tokenKey) return count;
             count++;
         }
         return count;
@@ -112,5 +114,16 @@ public class GridMatrix : MonoBehaviour
     public int GetNumColumns()
     {
         return boardColumns;
+    }
+
+    private void ActivateParticles(int row, int column, int dirRow, int dirCol, int tokenKey)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            row = row + dirRow;
+            column = column + dirCol;
+            if (CheckOutOfBounds(row, column) || tokenObjectMatrix[row, column] == null || tokenObjectMatrix[row, column].GetTokenKey() != tokenKey) return;
+            tokenObjectMatrix[row, column].ShowVictoryParticles();
+        }
     }
 }

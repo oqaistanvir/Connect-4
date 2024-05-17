@@ -11,9 +11,6 @@ public class TokenSpawner : MonoBehaviour
     public class OnTokenSpawnedEventArgs
     {
         public Token token;
-        public int row;
-        public int column;
-        public int tokenKey;
     }
 
     public event EventHandler<OnColumnChangedEventArgs> OnColumnChanged;
@@ -26,7 +23,7 @@ public class TokenSpawner : MonoBehaviour
     [SerializeField] private int column;
 
     private float startXPosition = -4.5f;
-    private float startYPosition = 3.75f;
+    private float startYPosition = -3.75f;
     private float xDistance = 1.5f;
     private float yDistance = 1.5f;
     private int row;
@@ -64,7 +61,7 @@ public class TokenSpawner : MonoBehaviour
     {
         row = GridMatrix.Instance.GetLowestEmptyRow(column);
         xPosition = startXPosition + xDistance * column;
-        yPosition = startYPosition - yDistance * row;
+        yPosition = startYPosition + yDistance * row;
         if (row == -1) return false;
         else return true;
     }
@@ -75,13 +72,10 @@ public class TokenSpawner : MonoBehaviour
         if (CalculateCoordinates(out xPosition, out yPosition))
         {
             Token token = Token.CreateTokenObject(tokenPrefab, new Vector3(xPosition, yPosition));
-            token.SetTokenCharacteristics(tokenKey);
+            token.SetTokenCharacteristics(tokenKey, row, column);
             OnTokenSpawned?.Invoke(this, new OnTokenSpawnedEventArgs
             {
-                token = token,
-                row = row,
-                column = column,
-                tokenKey = tokenKey
+                token = token
             });
             TurnManager.Instance.ToggleCurrentPlayer();
         }
