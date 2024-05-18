@@ -27,9 +27,24 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    public void SetGamePlaying()
+    {
+        state = State.GamePlaying;
+    }
+
     public bool IsGamePlaying()
     {
         return state == State.GamePlaying;
+    }
+
+    public void SetGamePaused()
+    {
+        state = State.GamePaused;
+    }
+
+    public bool IsGamePaused()
+    {
+        return state == State.GamePaused;
     }
 
     public void SetGameOver()

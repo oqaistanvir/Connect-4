@@ -12,7 +12,6 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button quitButton;
-
     private void Awake()
     {
         Instance = this;
@@ -40,16 +39,28 @@ public class PauseUI : MonoBehaviour
 
     private void GameInput_OnPauseKeyPressed(object sender, EventArgs e)
     {
-        Show();
+        if (GameManager.Instance.IsGamePlaying() || GameManager.Instance.IsGamePaused())
+        {
+            if (gameObject.activeSelf)
+            {
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
+        }
     }
 
     public void Show()
     {
+        GameManager.Instance.SetGamePaused();
         gameObject.SetActive(true);
     }
 
     public void Hide()
     {
+        GameManager.Instance.SetGamePlaying();
         gameObject.SetActive(false);
     }
 }

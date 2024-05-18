@@ -41,20 +41,26 @@ public class TokenSpawner : MonoBehaviour
 
     private void GameInput_OnPreviousKeyPressed(object sender, EventArgs e)
     {
-        column = column > 0 ? (column - 1) % GridMatrix.Instance.GetNumColumns() : GridMatrix.Instance.GetNumColumns() - 1;
-        OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+        if (GameManager.Instance.IsGamePlaying())
         {
-            column = column
-        });
+            column = column > 0 ? (column - 1) % GridMatrix.Instance.GetNumColumns() : GridMatrix.Instance.GetNumColumns() - 1;
+            OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+            {
+                column = column
+            });
+        }
     }
 
     private void GameInput_OnNextKeyPressed(object sender, EventArgs e)
     {
-        column = (column + 1) % GridMatrix.Instance.GetNumColumns();
-        OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+        if (GameManager.Instance.IsGamePlaying())
         {
-            column = column
-        });
+            column = (column + 1) % GridMatrix.Instance.GetNumColumns();
+            OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
+            {
+                column = column
+            });
+        }
     }
 
     private bool CalculateCoordinates(out float xPosition, out float yPosition)
