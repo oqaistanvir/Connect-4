@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,12 +25,7 @@ public class GameUI : MonoBehaviour
 
     private void GameManager_OnGameStateChanged(object sender, EventArgs e)
     {
-        if (GameManager.Instance.IsGamePlaying())
-        {
-            // ShowGameHud();
-            // hideBoardButton.gameObject.SetActive(false);
-        }
-        else if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver())
         {
             hideBoardButton.gameObject.SetActive(true);
         }
@@ -45,12 +38,4 @@ public class GameUI : MonoBehaviour
             HudElement.SetActive(false);
         }
     }
-
-    // private void ShowGameHud()
-    // {
-    //     foreach (GameObject HudElement in HudElements)
-    //     {
-    //         HudElement.SetActive(true);
-    //     }
-    // }
 }
