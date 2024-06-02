@@ -556,7 +556,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1282511934677226751, guid: 4f20c54033cdc6942adb058833efb0fa, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1732716811739491003, guid: 4f20c54033cdc6942adb058833efb0fa,
@@ -564,9 +565,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3267126694483273823}
   m_SourcePrefab: {fileID: 100100000, guid: 4f20c54033cdc6942adb058833efb0fa, type: 3}
---- !u!23 &817357166974411928 stripped
+--- !u!23 &165128467246716448 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7584805242192415833, guid: 4f20c54033cdc6942adb058833efb0fa,
+  m_CorrespondingSourceObject: {fileID: 6944503735633379041, guid: 4f20c54033cdc6942adb058833efb0fa,
     type: 3}
   m_PrefabInstance: {fileID: 7067680731304519873}
   m_PrefabAsset: {fileID: 0}
@@ -604,4 +605,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 039cbd87b56deae49b3730b94f8fb31b, type: 2}
   - {fileID: 2100000, guid: 32ebec34d84d98a45a60a401e08ebb90, type: 2}
   tokenKey: 0
-  meshRenderer: {fileID: 817357166974411928}
+  meshRenderer: {fileID: 165128467246716448}
