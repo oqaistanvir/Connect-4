@@ -12,6 +12,10 @@ public class Token : MonoBehaviour
     private int row;
     private int column;
 
+    private void Awake()
+    {
+        HideVictoryParticles();
+    }
     public static Token CreateTokenObject(Transform tokenPrefab, Vector3 position)
     {
         Transform tokenTransform = Instantiate(tokenPrefab);
@@ -30,6 +34,11 @@ public class Token : MonoBehaviour
     public void ShowVictoryParticles()
     {
         victoryParticles.SetActive(true);
+    }
+
+    public void HideVictoryParticles()
+    {
+        victoryParticles.SetActive(false);
     }
 
     public int GetTokenKey()
