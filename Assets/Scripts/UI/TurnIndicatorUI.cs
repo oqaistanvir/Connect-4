@@ -7,7 +7,6 @@ using UnityEngine;
 public class TurnIndicatorUI : MonoBehaviour
 {
     public static TurnIndicatorUI Instance { get; private set; }
-
     [SerializeField] private TextMeshProUGUI turnIndicatorFlash;
     [SerializeField] private TextMeshProUGUI turnIndicator;
     private const string FADE_IN_FADE_OUT = "FadeInFadeOut";
@@ -21,16 +20,14 @@ public class TurnIndicatorUI : MonoBehaviour
     {
         TurnManager.Instance.OnPlayerChanged += TurnManager_OnPlayerChanged;
     }
-
+    private void OnDestroy()
+    {
+        TurnManager.Instance.OnPlayerChanged -= TurnManager_OnPlayerChanged;
+    }
     private void TurnManager_OnPlayerChanged(object sender, int currentPlayer)
     {
-        turnIndicatorFlash.text = "PLAYER " + (currentPlayer) + " TURN";
-        turnIndicator.text = "PLAYER " + (currentPlayer);
+        turnIndicatorFlash.text = "PLAYER " + currentPlayer + " TURN";
+        turnIndicator.text = "PLAYER " + currentPlayer;
         animator.SetTrigger(FADE_IN_FADE_OUT);
     }
-
-    // public void UpdateTurnIndicator(int currentPlayer)
-    // {
-
-    // }
 }

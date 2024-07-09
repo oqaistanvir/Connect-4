@@ -62,6 +62,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Testing"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3294475-a5a0-4dcb-9d8f-4ef7a10b4832"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9e994c2-eb27-4911-a6c3-b7fec155a519"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Testing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +140,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_NextColumn = m_Player.FindAction("NextColumn", throwIfNotFound: true);
         m_Player_PrevColumn = m_Player.FindAction("PrevColumn", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Testing = m_Player.FindAction("Testing", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +206,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_NextColumn;
     private readonly InputAction m_Player_PrevColumn;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Testing;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -193,6 +215,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @NextColumn => m_Wrapper.m_Player_NextColumn;
         public InputAction @PrevColumn => m_Wrapper.m_Player_PrevColumn;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Testing => m_Wrapper.m_Player_Testing;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +237,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Testing.started += instance.OnTesting;
+            @Testing.performed += instance.OnTesting;
+            @Testing.canceled += instance.OnTesting;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -230,6 +256,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Testing.started -= instance.OnTesting;
+            @Testing.performed -= instance.OnTesting;
+            @Testing.canceled -= instance.OnTesting;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -253,5 +282,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnNextColumn(InputAction.CallbackContext context);
         void OnPrevColumn(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnTesting(InputAction.CallbackContext context);
     }
 }

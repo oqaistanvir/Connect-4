@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,6 +22,8 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
+        GridMatrix.Instance.OnGameEnd += GridMatrix_OnGameEnd;
+
         showBoardButton.onClick.AddListener(() =>
         {
             GameUI.Instance.HideGameHud();
@@ -49,11 +52,16 @@ public class GameOverUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetResultText(int resultKey)
+    private void SetResultText(int resultKey)
     {
         if (resultKey == 0) resultText.text = "DRAW";
         else if (resultKey == 1) resultText.text = "PLAYER 1 WON";
         else resultText.text = "PLAYER 2 WON";
         Show();
+    }
+
+    private void GridMatrix_OnGameEnd(object sender, int resultKey)
+    {
+        SetResultText(resultKey);
     }
 }

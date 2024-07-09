@@ -22,7 +22,7 @@ public class ColumnMarkerVisuals : MonoBehaviour
         if (GameManager.Instance.IsGamePlaying())
         {
             columnMarkerArray[selectedColumnMarker].gameObject.SetActive(false);
-            selectedColumnMarker = e.column;
+            selectedColumnMarker = e.col;
             columnMarkerArray[selectedColumnMarker].gameObject.SetActive(true);
         }
     }
