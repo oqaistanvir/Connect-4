@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,10 +17,20 @@ public class TurnIndicatorUI : MonoBehaviour
         Instance = this;
         animator = GetComponent<Animator>();
     }
-    public void UpdateTurnIndicator(int currentPlayer)
+    private void Start()
+    {
+        TurnManager.Instance.OnPlayerChanged += TurnManager_OnPlayerChanged;
+    }
+
+    private void TurnManager_OnPlayerChanged(object sender, int currentPlayer)
     {
         turnIndicatorFlash.text = "PLAYER " + (currentPlayer) + " TURN";
         turnIndicator.text = "PLAYER " + (currentPlayer);
         animator.SetTrigger(FADE_IN_FADE_OUT);
     }
+
+    // public void UpdateTurnIndicator(int currentPlayer)
+    // {
+
+    // }
 }
