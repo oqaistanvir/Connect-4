@@ -64,6 +64,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Undo"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7e83214-588f-4bf3-9992-9c48abb519be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Testing"",
                     ""type"": ""Button"",
                     ""id"": ""f3294475-a5a0-4dcb-9d8f-4ef7a10b4832"",
@@ -128,6 +137,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Testing"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1173f21-0853-4037-8b38-eb45f42bb961"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Undo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -140,6 +160,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_NextColumn = m_Player.FindAction("NextColumn", throwIfNotFound: true);
         m_Player_PrevColumn = m_Player.FindAction("PrevColumn", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Undo = m_Player.FindAction("Undo", throwIfNotFound: true);
         m_Player_Testing = m_Player.FindAction("Testing", throwIfNotFound: true);
     }
 
@@ -206,6 +227,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_NextColumn;
     private readonly InputAction m_Player_PrevColumn;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Undo;
     private readonly InputAction m_Player_Testing;
     public struct PlayerActions
     {
@@ -215,6 +237,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @NextColumn => m_Wrapper.m_Player_NextColumn;
         public InputAction @PrevColumn => m_Wrapper.m_Player_PrevColumn;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Undo => m_Wrapper.m_Player_Undo;
         public InputAction @Testing => m_Wrapper.m_Player_Testing;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -237,6 +260,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Undo.started += instance.OnUndo;
+            @Undo.performed += instance.OnUndo;
+            @Undo.canceled += instance.OnUndo;
             @Testing.started += instance.OnTesting;
             @Testing.performed += instance.OnTesting;
             @Testing.canceled += instance.OnTesting;
@@ -256,6 +282,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Undo.started -= instance.OnUndo;
+            @Undo.performed -= instance.OnUndo;
+            @Undo.canceled -= instance.OnUndo;
             @Testing.started -= instance.OnTesting;
             @Testing.performed -= instance.OnTesting;
             @Testing.canceled -= instance.OnTesting;
@@ -282,6 +311,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnNextColumn(InputAction.CallbackContext context);
         void OnPrevColumn(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnUndo(InputAction.CallbackContext context);
         void OnTesting(InputAction.CallbackContext context);
     }
 }

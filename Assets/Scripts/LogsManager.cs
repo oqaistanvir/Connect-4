@@ -33,6 +33,10 @@ public class LogsManager : MonoBehaviour
     {
         logList.Add(new(currentPlayer, row, col));
     }
+    public bool HasLogInLogList()
+    {
+        return logList.Count > 0;
+    }
     public Log RemoveFromLogList()
     {
         Log log = logList[^1];

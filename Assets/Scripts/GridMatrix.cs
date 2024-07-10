@@ -29,6 +29,7 @@ public class GridMatrix : MonoBehaviour
     private void Start()
     {
         TokenSpawner.Instance.OnTokenSpawned += TokenSpawner_OnTokenSpawned;
+        GameInput.Instance.OnUndoKeyPressed += GameInput_OnUndoKeyPressed;
     }
 
     private void TokenSpawner_OnTokenSpawned(object sender, TokenSpawner.OnTokenSpawnedEventArgs tokenData)
@@ -38,14 +39,20 @@ public class GridMatrix : MonoBehaviour
         if (CheckWinCondition(tokenData.token.GetTokenRow(), tokenData.token.GetTokenColumn(), tokenData.token.GetTokenKey()))
         {
             OnGameEnd?.Invoke(this, tokenData.token.GetTokenKey());
-            // GameManager.Instance.SetGameOver();
-            // GameOverUI.Instance.SetResultText(tokenData.token.GetTokenKey());
         }
         else if (emptyCells == 0)
         {
             OnGameEnd?.Invoke(this, 0);
-            // GameManager.Instance.SetGameOver();
-            // GameOverUI.Instance.SetResultText(0);
+        }
+    }
+
+    private void GameInput_OnUndoKeyPressed(object sender, EventArgs e)
+    {
+        emptyCells++;
+        if (LogsManager.Instance.HasLogInLogList())
+        {
+            Log log = LogsManager.Instance.RemoveFromLogList();
+            Destroy(tokenObjectMatrix[log.row, log.col].gameObject);
         }
     }
 

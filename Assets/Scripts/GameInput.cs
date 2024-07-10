@@ -11,10 +11,12 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnNextKeyPressed;
     public event EventHandler OnPreviousKeyPressed;
     public event EventHandler OnPauseKeyPressed;
+    public event EventHandler OnUndoKeyPressed;
     public event EventHandler OnTestingKeyPressed;
     public static GameInput Instance { get; private set; }
 
     private PlayerInputActions playerInputActions;
+
     private void Awake()
     {
         Instance = this;
@@ -25,6 +27,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.NextColumn.performed += NextColumn_performed;
         playerInputActions.Player.PrevColumn.performed += PrevColumn_performed;
         playerInputActions.Player.Pause.performed += Pause_performed;
+        playerInputActions.Player.Undo.performed += Undo_performed;
         playerInputActions.Player.Testing.performed += Testing_performed;
     }
 
@@ -34,9 +37,11 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.NextColumn.performed -= NextColumn_performed;
         playerInputActions.Player.PrevColumn.performed -= PrevColumn_performed;
         playerInputActions.Player.Pause.performed -= Pause_performed;
+        playerInputActions.Player.Undo.performed -= Undo_performed;
         playerInputActions.Player.Testing.performed -= Testing_performed;
         playerInputActions.Dispose();
     }
+
     private void TokenPlacement_performed(InputAction.CallbackContext context)
     {
         OnPlaceTokenKeyPressed?.Invoke(this, EventArgs.Empty);
@@ -56,6 +61,12 @@ public class GameInput : MonoBehaviour
     {
         OnPauseKeyPressed?.Invoke(this, EventArgs.Empty);
     }
+
+    private void Undo_performed(InputAction.CallbackContext context)
+    {
+        OnUndoKeyPressed?.Invoke(this, EventArgs.Empty);
+    }
+
     private void Testing_performed(InputAction.CallbackContext context)
     {
         OnTestingKeyPressed?.Invoke(this, EventArgs.Empty);

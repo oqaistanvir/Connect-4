@@ -18,8 +18,10 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         TokenSpawner.OnAfterTokenPlaced += TokenSpawner_OnAfterTokenPlaced;
+        GameInput.Instance.OnUndoKeyPressed += GameInput_OnUndoKeyPressed;
         NextTurn();
     }
+
     public void ToggleCurrentPlayer()
     {
         currentPlayer = currentPlayer == 2 ? 1 : 2;
@@ -49,4 +51,10 @@ public class TurnManager : MonoBehaviour
     {
         NextTurn();
     }
+
+    private void GameInput_OnUndoKeyPressed(object sender, EventArgs e)
+    {
+        PreviousTurn();
+    }
+
 }
