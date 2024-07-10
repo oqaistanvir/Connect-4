@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class PauseUI : MonoBehaviour
 {
     public static PauseUI Instance { get; private set; }
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameResumed;
     private const string GAME_SCENE = "GameScene";
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
@@ -54,13 +56,13 @@ public class PauseUI : MonoBehaviour
 
     public void Show()
     {
-        GameManager.Instance.SetGamePaused();
         gameObject.SetActive(true);
+        OnGamePaused?.Invoke(this, EventArgs.Empty);
     }
 
     public void Hide()
     {
-        GameManager.Instance.SetGamePlaying();
         gameObject.SetActive(false);
+        OnGameResumed?.Invoke(this, EventArgs.Empty);
     }
 }

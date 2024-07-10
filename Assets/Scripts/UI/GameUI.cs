@@ -20,15 +20,12 @@ public class GameUI : MonoBehaviour
         });
 
         hideBoardButton.gameObject.SetActive(false);
-        GameManager.Instance.OnGameStateChanged += GameManager_OnGameStateChanged;
+        GridMatrix.Instance.OnGameEnd += GridMatrix_OnGameEnd;
     }
 
-    private void GameManager_OnGameStateChanged(object sender, EventArgs e)
+    private void GridMatrix_OnGameEnd(object sender, int e)
     {
-        if (GameManager.Instance.IsGameOver())
-        {
-            hideBoardButton.gameObject.SetActive(true);
-        }
+        hideBoardButton.gameObject.SetActive(true);
     }
 
     public void HideGameHud()

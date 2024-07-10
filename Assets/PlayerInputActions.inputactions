@@ -40,6 +40,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Undo",
+                    "type": "Button",
+                    "id": "e7e83214-588f-4bf3-9992-9c48abb519be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Testing",
+                    "type": "Button",
+                    "id": "f3294475-a5a0-4dcb-9d8f-4ef7a10b4832",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -84,6 +102,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f9e994c2-eb27-4911-a6c3-b7fec155a519",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Testing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1173f21-0853-4037-8b38-eb45f42bb961",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Undo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

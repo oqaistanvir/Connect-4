@@ -6,7 +6,7 @@ using UnityEngine;
 public class TokenSpawner : MonoBehaviour
 {
     public static TokenSpawner Instance { get; private set; }
-
+    public static event EventHandler OnAfterTokenPlaced;
     public event EventHandler<OnTokenSpawnedEventArgs> OnTokenSpawned;
     public class OnTokenSpawnedEventArgs
     {
@@ -16,16 +16,16 @@ public class TokenSpawner : MonoBehaviour
     public event EventHandler<OnColumnChangedEventArgs> OnColumnChanged;
     public class OnColumnChangedEventArgs
     {
-        public int column;
+        public int col;
     }
 
     [SerializeField] private Transform tokenPrefab;
-    [SerializeField] private int column;
+    [SerializeField] private int col;
 
-    private float startXPosition = -4.5f;
-    private float startYPosition = -3.75f;
-    private float xDistance = 1.5f;
-    private float yDistance = 1.5f;
+    private readonly float startXPosition = -4.5f;
+    private readonly float startYPosition = -3.75f;
+    private readonly float xDistance = 1.5f;
+    private readonly float yDistance = 1.5f;
     private int row;
     private void Awake()
     {
@@ -43,10 +43,10 @@ public class TokenSpawner : MonoBehaviour
     {
         if (GameManager.Instance.IsGamePlaying())
         {
-            column = column > 0 ? (column - 1) % GridMatrix.Instance.GetNumColumns() : GridMatrix.Instance.GetNumColumns() - 1;
+            col = col > 0 ? (col - 1) % GridMatrix.Instance.GetNumColumns() : GridMatrix.Instance.GetNumColumns() - 1;
             OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
             {
-                column = column
+                col = col
             });
         }
     }
@@ -55,18 +55,18 @@ public class TokenSpawner : MonoBehaviour
     {
         if (GameManager.Instance.IsGamePlaying())
         {
-            column = (column + 1) % GridMatrix.Instance.GetNumColumns();
+            col = (col + 1) % GridMatrix.Instance.GetNumColumns();
             OnColumnChanged?.Invoke(this, new OnColumnChangedEventArgs
             {
-                column = column
+                col = col
             });
         }
     }
 
     private bool CalculateCoordinates(out float xPosition, out float yPosition)
     {
-        row = GridMatrix.Instance.GetLowestEmptyRow(column);
-        xPosition = startXPosition + xDistance * column;
+        row = GridMatrix.Instance.GetLowestEmptyRow(col);
+        xPosition = startXPosition + xDistance * col;
         yPosition = startYPosition + yDistance * row;
         if (row == -1) return false;
         else return true;
@@ -74,16 +74,15 @@ public class TokenSpawner : MonoBehaviour
 
     private void SpawnToken(int tokenKey)
     {
-        float xPosition, yPosition;
-        if (CalculateCoordinates(out xPosition, out yPosition))
+        if (CalculateCoordinates(out float xPosition, out float yPosition))
         {
             Token token = Token.CreateTokenObject(tokenPrefab, new Vector3(xPosition, yPosition));
-            token.SetTokenCharacteristics(tokenKey, row, column);
+            token.SetTokenCharacteristics(tokenKey, row, col);
             OnTokenSpawned?.Invoke(this, new OnTokenSpawnedEventArgs
             {
                 token = token
             });
-            TurnManager.Instance.ToggleCurrentPlayer();
+            OnAfterTokenPlaced?.Invoke(this, EventArgs.Empty);
         }
     }
     private void GameInput_OnPlaceTokenKeyPressed(object sender, EventArgs e)
